@@ -70,9 +70,14 @@ st.markdown("""
 @st.cache_resource
 def initialize_models():
     """Initialize the object detector and chatbot (cached)"""
-    api_key = os.getenv("GOOGLE_API_KEY")
+    # Try to get API key from Streamlit secrets first, then from .env
+    try:
+        api_key = st.secrets["GOOGLE_API_KEY"]
+    except:
+        api_key = os.getenv("GOOGLE_API_KEY")
+
     if not api_key:
-        st.error("⚠️ Google API Key not found. Please set GOOGLE_API_KEY in .env file")
+        st.error("⚠️ Google API Key not found. Please set GOOGLE_API_KEY in Streamlit secrets or .env file")
         st.stop()
 
     detector = ObjectDetector(model_path="yolov8n.pt")
