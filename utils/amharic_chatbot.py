@@ -19,7 +19,7 @@ class AmharicChatbot:
             api_key: Google API key for Gemini
         """
         genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.model = genai.GenerativeModel('models/gemini-1.5-flash-latest')
         self.chat_history: List[Dict] = []
 
     def generate_response(
